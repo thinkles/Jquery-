@@ -1,0 +1,186 @@
+*
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.menu
+{
+  width:50px;
+  height:100%;
+  background-color: #0e3248;
+  position: fixed;
+  /* 以视口位置为基准 */
+  top:0px;
+  left: 0px;
+  transition: .3s all;
+}
+.menu ul
+{
+    list-style: none;
+  
+}
+.menu ul li
+{
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0 13px 0 0;
+    border-radius: 0 30px 30px 0;
+    transition: .3s all;
+}
+.menu ul li:hover
+{
+    background-color: #e00032;
+}
+.menu ul li a:hover
+{
+    text-indent: 4px;
+    color: rgba(255, 255, 255, 0.85);
+}
+.menu ul li a:hover .fa
+{
+    color: rgba(255, 255, 255, 0.8);
+}
+.menu ul li a i.fa
+{
+    font-size: 22px;
+    display: inline-block;
+    margin: 0px 10px 0 2px;
+}
+.menu ul li a
+{
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    display: block;
+    padding: 15px 10px;
+     transition: .3s all; 
+}
+.intro
+{
+  margin-left: 50px;
+  margin-bottom: 15px;
+  padding: 60px 30px;
+  text-align: center;
+  font-size: 1.5em;
+  line-height: 1.5;
+  background-color:#dddddd ;
+  color: #333333;
+  
+}
+.intro p {
+	font-size: 14px;
+}
+.main
+{
+    width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: #f9f9f9;;
+    border-bottom: 1px solid #333333;
+}
+.main h3
+{
+    
+    text-align: center;
+    border: 1px solid #dddddd;
+    cursor: pointer;
+}
+.main h3 address{
+    text-indent: 4em;
+    font-size: 14px;
+    font-style: normal;
+}
+.main section{
+
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    border: 2px groove #333333;
+    border-bottom: none;
+    background-color: #dddddd;
+    margin-bottom: 15px;
+    
+}
+.main section address
+{
+    text-indent:5em;
+}
+
+.lunbo
+{
+    height: 500px;
+    width: 1200px;
+    position: relative;
+    margin: auto;
+}
+.viewr
+{
+    height: 500px;
+    width: 1200px;
+    overflow: hidden;
+    position: absolute;
+
+}
+.container
+{
+    width:10000px;
+    position: absolute;
+
+}
+.contain
+{
+    
+    list-style: none;
+    width: 1200px;
+    height: 500px;
+    position: relative;
+}
+.contain>li
+{
+    position: absolute;
+    height: 400px;
+    top: 50px;
+    
+    transition: transform .3s;
+    
+}
+ .contain li.on
+{
+     transform: scale(1.2); 
+   
+} 
+
+.contain>li>a
+{
+    display: block;
+}
+.find{
+    position: absolute;
+    top: 0;
+}
+.prev
+{
+    height: 500px;
+    width: 240px;
+position: absolute;
+top: 50px;
+z-index: 10;
+}
+.next
+{  height: 500px;
+    width: 240px;
+position: absolute;
+top: 50px;
+left: 960px;
+z-index: 10;
+}
+
+
+.foot
+{
+    width: 100%;
+    height: 30px;
+    background-color: #dddddd;
+    margin-top: 15px;
+    text-align: center;
+}

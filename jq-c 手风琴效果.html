@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>手风琴效果</title>
+<style>
+    *{
+        margin: 0px;
+      padding: 0px;
+    }
+    li{
+        float: left;
+        list-style: none;
+        width: 200px;
+        height: 300px;
+    }
+    div{
+       width:1000px;
+       margin: 10px auto 0;
+       border: 1px solid red;
+       height: 300px;
+       overflow: hidden;
+    }
+    ul{
+       width:1900px;
+    }
+   
+</style>
+</head>
+<body>
+  <div>
+   <ul>
+       <li><img src="../img/lp0.png"></li>
+       <li><img src="../img/lp1.png"></li>
+       <li><img src="../img/lp2.png"></li>
+       <li><img src="../img/lp3.png"></li>
+       <li><img src="../img/lp4.png"></li>
+   </ul>
+
+</div>
+<script src="./jquery-3.5.1.min.js"></script>
+<script>
+    $("ul li").mouseenter(function(){
+      $(this).stop(true).animate({"width":"500px"},1000).siblings().stop(true).animate({"width":"125px"},1000);
+
+    }).mouseleave(function(){
+        $("ul li").stop(true).animate({"width":"200px"},1000);
+    })
+
+
+</script>
+</body>
+</html>
+
+<!-- 
+    手风琴
+    原始状态都是等大图片
+    1. 被选中元素(在前面的元素)向左移动,在他后面的元素向后移动 ,// 其实是宽度的改变
+
+ -->

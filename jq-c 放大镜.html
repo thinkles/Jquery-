@@ -1,0 +1,112 @@
+<!-- 
+    小图片的比例和大图片的比例是一样的
+    ，放大镜比例和右侧大的容器比例是一样的；他们之间的比例是相同的 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>放大镜</title>
+
+     <style>
+         *{
+             margin: 0px;
+             padding: 0px;
+         }
+         .wrap{
+            width: 670px;
+            margin: 50px auto 0;
+         }
+         .image{
+           width: 320px;
+           height: 180px;
+           /* overflow: hidden; */
+           margin-right: 10px;
+          position: relative;
+          
+         }
+         .cube{
+        position: absolute;
+        top: 0;
+         left: 0;
+         width: 100px;
+         height: 100px;
+         background-color: rgba(38, 42, 43, 0.24);
+         }
+         .show{
+             position: absolute;
+             width: 400px;
+             height: 400px;
+             top: 0px;
+             left: 380px;
+             background: url(../img/bear3.jpg);
+         }
+         img{
+             display: block;
+         }
+     </style>
+</head>
+<body>
+    <div class="wrap">
+     <div class="image">
+        <img src="../img/bear3.jpg" width="320px" height="180px" alt="">
+         <div class="cube" style="display: none;">  </div>
+         <div class="show" style="display: none;">
+     </div>
+  
+    </div>
+
+<script src="./jquery-3.5.1.min.js"></script>
+<script> 
+  
+   $(".image").mouseenter(function(){
+       
+        $(".cube,.show").show();
+        $(this).mousemove(function(e){
+            
+            let nleft=e.pageX-$(this).offset().left- $(".cube").width()/2;
+            let ntop=e.pageY- $(this).offset().top - $(".cube").height()/2;
+            //鼠标移动临界值的判断
+
+            // 左右边界判断
+            if(nleft<0){
+                nleft=0;
+            }
+            else if(nleft > $(".image").width() - $(".cube").width())
+                {
+                    nleft=$(".image").width() - $(".cube").width();
+                }
+
+  //上下判断
+              if(ntop<0){
+                ntop=0;
+            }
+            else if(ntop > $(".image").height() - $(".cube").height())
+                {
+                    ntop=$(".image").height() - $(".cube").height();
+                }
+
+                $('.cube').css({left:nleft,top:ntop});
+            
+/////////////////////////  实现了 遮盖层的移动功能
+        /* 小图的宽度:大图的宽度 = 放大镜的left:放大后的left */
+            let d_left = 1280 * nleft/ 320;
+            let d_top = 720 * ntop/ 180;
+          $(".show").css("background-position",'-'+d_left+'px -'+d_top+'px');
+        }).mouseleave(function(){
+
+            $(".cube,.show").hide();
+
+        })
+
+   })
+
+
+</script>
+</body>
+</html>
+
+<!-- 放大镜关键在于  
+                     小图:大图=放大镜:展示容器 
+                    小图的宽度:大图的宽度 = 放大镜的left:展示容器的left    -->

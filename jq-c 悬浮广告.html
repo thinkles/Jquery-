@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>悬浮广告</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        .left
+        
+        {
+            position: absolute;
+            top: 100px;
+            left: 0px;
+            height: 300px;
+            width: 100px;
+            background-color: aquamarine;
+        }
+        .right{
+            position: absolute;
+            top: 100px;
+            right: 0px;
+            height: 300px;
+            width: 100px;
+            background-color: aquamarine;
+        
+        }
+        .zz{
+            height: 1000px;
+        }
+    </style>
+</head>
+<body>
+    <div class="zz"></div>
+    <div class="left"></div>
+    <div class="right"></div>
+
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>
+         /*
+        let div_left=$(".left");
+       $(function(){
+            $(window).scroll(function(){
+          let dis=$(this).scrollTop() + 100;
+          $(".left,.right").animate({"top":dis},50);})
+        })
+       */ //版本一： 使用固定的top加上滚动的距离
+
+       $(function(){
+            var $ad = $('.ads');
+            var win_height = $(window).height();
+            var ad_height  = $ad.height();
+
+            var scroll_fun = function(){
+                let num=0
+                var ad_top = $(window).scrollTop()+(win_height-ad_height)/2;
+                $ad.stop(true).animate({top:ad_top}, 500);
+               
+            }
+            scroll_fun();
+            //当窗口滚动的时候，让小广告位于窗口的垂直的中央
+            $(window).scroll(scroll_fun);
+
+            //当单击关闭的时候，关闭广告
+            $('.ads span').click(function(){
+                $(this).parent().hide(500);
+            });
+
+        })  //版本二： 使用滚动的距离加上中间的位置
+   
+
+    </script>
+</body>
+</html>

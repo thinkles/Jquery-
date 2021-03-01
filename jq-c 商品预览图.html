@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<title> 商品预览图</title>
+<style>
+
+*{margin:0;padding:0;}
+    ul{
+            margin:100px 0 0 100px;
+        }
+        ul
+    li{
+        list-style: none;
+        float: left;
+        cursor: pointer;
+        border:1px solid #ccc;
+        margin-right:20px;
+    }
+    img{
+        display: block;
+    }
+    .big-img{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+</style>
+    </head>
+    <body>
+        <ul>
+            <li><img src="../img/lunbo1.jpg" width="120" height="80"></li>
+            <li><img src="../img/lunbo2.jpg" width="120" height="80"></li>
+            <li><img src="../img/lunbo3.jpg" width="120" height="80"></li>
+            <li><img src="../img/lunbo4.jpg" width="120" height="80"></li>
+        </ul>
+
+    
+        <script src="./jquery-3.5.1.min.js"></script>
+        <script>
+            $(function(){
+        let $big;
+         $("ul li").mouseenter(function(e){
+             
+                $big=$('<img class="big-img" src='+$(this).children().attr("src")+' >');
+                $big.css({left:e.pageX+10,top:e.pageY+10});
+                $('body').append($big);
+         }).mousemove(function(e){
+            $big.css({left:e.pageX+10,top:e.pageY+10});
+
+         }).mouseleave(function(){
+          
+            $big.remove();
+         })
+
+            })
+          
+        </script>
+    </body>
+</html>
+<!-- 
+    预览图的大图,通过创建一个新的元素,来展示,
+    这样不在html中添加新的元素,只在需要时创建,不需要时删除,节省资源
+
+
+本质上就是 元素的增删改查
+ -->

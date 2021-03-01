@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        无缝轮播
+    </title>
+<style>
+*{margin: 0px;
+padding: 0px;
+}
+.banner{
+width: 520px;
+height: 280px;
+margin: 100px auto 0;
+position: relative;
+overflow: hidden;
+}
+ul{
+width: 1000%;
+height: 100%;
+position: absolute;
+top: 0px;
+left: 0px;
+}
+.banner ul li{
+            float: left;
+            width: 10%;
+            height:100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner ul li img{
+            position: absolute;
+            left:50%;
+            top:0;
+            margin-left: -260px;
+        }
+
+        .arrow-left{
+            position: absolute;
+             top: 45%;
+             left: 0px;
+             background: rgba(0, 0, 0, 0.3);
+             font-size: 30px;
+            }
+        .arrow-right{
+            position: absolute;
+            top: 45%;
+            right: 0px;
+            background: rgba(0, 0, 0, 0.3);
+            font-size: 30px;}
+
+            .banner ol li.cur{
+            background: #f40;
+        }
+        .banner ol{
+            width: 65px;
+            height: 13px;
+            border-radius: 6px;
+            background: rgba(255,255,255,.3);
+            position: absolute;
+            left:50%;
+            bottom:12px;
+            margin-left:-23px;
+            list-style: none;
+        }
+        .banner ol li{
+            width: 9px;
+            height: 9px;
+            background: #b7b7b7;
+            float: left;
+            margin:2px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+</style>
+</head>
+<body>
+<div class="banner">
+    <ul style="left: 0%;">
+        <li><img src="../img/lunbo1.jpg" alt=""></li>
+        <li><img src="../img/lunbo2.jpg" alt=""></li>
+        <li><img src="../img/lunbo3.jpg" alt=""></li>
+        <li><img src="../img/lunbo4.jpg" alt=""></li>
+        <li><img src="../img/con1.jpg" alt=""></li>
+        <li><img src="../img/lunbo1.jpg" alt=""></li>
+    </ul>
+
+<ol>
+   <li class="cur"></li>
+   <li></li>
+   <li></li>
+   <li></li>
+   <li></li>
+
+</ol>
+<span class="arrow-left">&lt;</span>
+<span class="arrow-right">&gt;</span>
+</div>
+<script src="./jquery-3.5.1.min.js">
+
+</script>
+<script>
+$(function(){
+
+let item = 0;
+let ul=$("ul");
+let div=$(".banner");
+let timer = null;
+ $(".arrow-right").click(function(){
+     item++;
+     console.log(item);
+     if(item == 6){
+         item=0;
+    }
+     $("ol li").eq(item).addClass("cur").siblings().removeClass("cur");
+     if(item==5)
+     {
+        $("ol li").eq(0).addClass("cur").siblings().removeClass("cur");
+     }
+     ul.animate({"left":item*(-100)+'%'},500,function(){   
+       if(item == 5)
+     {
+        ul.css("left",0+"%");
+        //替换为本尊后item 也要改变,这样才不会才影响 向左移动
+        item=0; 
+       
+        
+     }
+
+     });
+ })
+
+ $(".arrow-left").click(function(){
+     item--;
+     console.log(item);
+     if(item < 0)
+     {
+         item=5;
+         ul.css("left","-"+item+"00%");
+         item--;      
+         $("ol li").eq(item).addClass("cur").siblings().removeClass("cur");
+     }
+     $("ol li").eq(item).addClass("cur").siblings().removeClass("cur");
+    
+     ul.animate({"left":item*(-100)+'%'},200);
+    });
+
+
+    timer = setInterval(function(){
+             $('.arrow-right').click();
+        },2000); 
+
+  $("ol li").click(function(){
+
+           if($(this).index() == 0 && item == 4){
+                $('.arrow-right').click();
+                $(this).addClass("cur").siblings().removeClass("cur");
+            }
+          /*   else if($(this).index() == 4 && item  == 0){
+                $('.arrow-left').click();
+                $(this).addClass("cur").siblings().removeClass("cur");
+            } */
+            else{
+                if(item  > $(this).index()){
+                    item=$(this).index()+1;
+                    $('.arrow-left').click();
+                    $(this).addClass("cur").siblings().removeClass("cur");
+                }
+                else{
+                    item = $(this).index()-1;
+                    $('.arrow-right').click();
+                    $(this).addClass("cur").siblings().removeClass("cur");
+                }
+            }
+            
+  })
+
+ });
+</script>
+</body>
+</html>
+
+<!-- 
+ 无缝轮播的第一种实现: 使用一组图片多加第一张图片完成无缝轮播   (也可以使用两组图片完成)
+ 无缝轮播的两种特殊情况
+    1. 点击向后移动,最后的图片到达之后,用第一张图片覆盖住
+    2 第一张图片点击向前移动时, 使最后一张图片先覆盖 ,接着移动这张图片
+
+该版本实现了:下标 左右箭头移动(还有不完整的自动轮播)
+实现思路:
+1.写了左右箭头的click事件,事件中通过item变量记录当前的位置 通过移动ul容器的距离完成轮播.
+在事件中不仅改变了ul 的left值,还改变了下标的样式变换
+2. 写了下标点击事件的左右移动功能,实际是改变item,调用了左右箭头click的事件函数
+
+-->
+
+<!--  自己在写该版本的轮播,是功能导向的,需要什么功能直接写什么功能,结构不清晰 
+ 对于重复的功能代码也没有整合,在标准版中别人的代码,把下标变换 图片变换 写成一个函数, 
+ 左右箭头变换,只需要改变变量值 然后调用slid()函数, 下标变换则是调用左右箭头click函数
+ 结构很清晰
+-->

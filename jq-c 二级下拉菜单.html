@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二级下拉菜单</title>
+    <style>
+        *{margin: 0px; padding: 0px;}
+        ul{
+            list-style: none;
+        }
+        div{
+            margin: 100px auto;
+            width: 500px;
+        }
+        ul.fir>li{
+          float: left;
+          width: 100px;
+          height: 30px;
+          background-color: cadetblue;
+         
+          border: 1px solid salmon;
+          text-align: center;
+          line-height: 30px;
+          cursor: pointer;
+        }
+        ul.sec{
+            display: none;
+            background-color:rgba(165, 162, 159, 0.03);
+        }
+        ul.sec>li:hover{
+            background-color: antiquewhite;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <ul class="fir">
+            <li>娱乐
+                <ul class="sec" >
+                    <li>菜单</li>
+                    <li>菜单</li>
+                    <li>菜单</li>
+                </ul>
+                
+            </li>
+            <li>科教
+                <ul  class="sec">
+                    <li>菜单</li>
+                    <li>菜单</li>
+                    <li>菜单</li>
+                </ul>
+            </li>
+            <li>学习
+                <ul  class="sec">
+                    <li>菜单</li>
+                    <li>菜单</li>
+                    <li>菜单</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>
+         $(".fir>li").mouseover(function(){
+            $(".sec").eq($(this).index()).stop().slideDown();
+
+         }).mouseout(function(){
+            $(".sec").eq($(this).index()).stop().slideUp();
+
+         })
+
+
+    </script>
+</body>
+</html>

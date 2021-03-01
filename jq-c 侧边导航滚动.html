@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>侧边导航跟随滚动</title>
+        <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <style>
+            *{
+                margin: 0px;
+                padding: 0px;
+            }
+        
+            .contant{
+                height: 800px;
+                width: 1200px;
+                margin: 0 auto;
+                margin-top: 40px;
+                font-size: 100px;
+                background-color: antiquewhite;
+            }
+          
+            ul{
+                
+                top: 400px;
+                right: 60px; 
+                list-style: none;
+                background-color: beige;
+            }
+            .slid ul li{
+                width: 50px;
+                height: 50px;
+                line-height: 34px;
+                text-align: center;
+                font-size: 12px;
+      
+            }
+            .slid ul li:hover{
+                background-color: coral;
+            }
+            span{
+                display: block;
+                height: 34px;
+                width: 34px;
+                padding:5px 0;
+                margin:0 auto;
+                font-weight: bold;
+                border-top: 1px solid black;
+            }
+            .click{
+              background-color: gray;
+
+            }
+        </style>
+        <script src="./jquery-3.5.1.min.js"></script>
+    </head>
+    <body>
+     <div class="contant"> 板块一
+     </div>
+     <div class="contant"> 板块二
+    </div>
+    <div class="contant"> 板块三
+    </div>
+     <nav class="slid">
+      <ul style="position: absolute;">
+          <li><span style="border-top: none;">娱乐</span></li>
+          <li><span>电影</span></li>
+          <li><span style="line-height: 17px;">国产<br>动画</span>
+           </li>
+
+          <li><span>番剧</span></li>
+          <li><span>搞笑</span></li>
+          <li><span>学习</span></li>
+          <li class="back" style="display: none;"><span style=" line-height: 17px;"><i class="fa fa-book fa-lg" aria-hidden="true"></i><br>顶部</span></li>
+      </ul>
+    
+    </nav>
+     <!-- <script>
+        let ul=$(".slid ul");
+        let lastli=ul.children().last();
+        let ulbehind=$(".slid ul li");
+        lastli.click(function () {
+                
+             $('html').animate({scrollTop:20},500);
+          });
+          ulbehind.click(function () {
+            
+            let scrollnum=($(this).index())*800;
+            $('html').scrollTop(scrollnum);
+            $(this).css("background-color","coral").siblings().css("background-color","");
+            });
+         
+
+        let time=setInterval(function(){
+    
+          if($(window).scrollTop() >= 200){  
+              ul.css("position","fixed");
+              ul.css("top","20px");
+              $(".slid ul li:nth-child(1)").css("background-color","coral").siblings().css("background-color","");
+
+              if($(window).scrollTop() >= 800)
+              {
+                 $(".slid ul li:nth-child(2)").css("background-color","coral").siblings().css("background-color","");
+              }
+              if($(window).scrollTop() >= 1600)
+              {
+                  ul.children().last().css("display","block");
+                  $(".slid ul li:nth-child(3)").css("background-color","coral").siblings().css("background-color","");
+              }
+            
+          }
+         else{
+            
+              ul.css("position","absolute");
+              ul.css("top","250px");
+              lastli.css("display","none");
+         }
+           
+        },100);
+
+
+        
+
+     </script> -->
+    
+<!-- 2. 通过 scroll()重构 改善性能问题,
+  window 的scroll事件   判断当前top 位置  改变UL 的定位
+  判断当前的位置 给对应位置应用样式  当前位置通过数组进行存储
+  每个li的单击事件
+
+  吸顶工作, 回到顶部的工作
+
+-->
+<script>
+     let ul=$(".slid ul");
+     let liitem=$("ul li");
+     let content=$(".contant");
+     let navtop = ul.position().top;
+    let tops=[
+     content.eq(0).offset().top - 40,
+     content.eq(1).offset().top - 10,
+     content.eq(2).offset().top - 40,
+     0,0,0,0
+    ];
+    
+   $(function(){
+     liitem.mouseenter(function(){  
+       
+        if(!$(this).hasClass('click')){
+        $(this).addClass('hover').css("opacity","0").animate({opacity:1},500);
+        }
+
+     }).mouseleave(function(){
+        $(this).removeClass('hover');
+     })
+    
+
+   })
+
+
+
+
+
+      
+  $(window).scroll(function(){
+   if($(window).scrollTop() < tops[1] )
+   {  
+     liitem.eq(0).addClass('click').siblings().removeClass('click');
+   }
+   else if($(window).scrollTop()  < tops[2])
+   {
+    liitem.eq(1).addClass('click').siblings().removeClass('click');
+   }else{
+    liitem.eq(2).addClass('click').siblings().removeClass('click'); 
+   }
+   
+    
+   if($(window).scrollTop() +50>= navtop){
+      ul.css({position:'fixed',top:50});
+       }else{
+      ul.css({position:'absolute',top:400});
+            }
+
+
+    if($(window).scrollTop() >= $(window).height()){
+           $('.back').show();
+         }
+    else{
+       $('.back').hide();
+         }
+  }  
+  )
+
+   liitem.filter(":lt(7)").click(function(){
+    $(this).addClass('click').siblings().removeClass('click');
+    $('html').scrollTop(tops[$(this).index()]);
+//  $('html').animate({scrollTop:tops[$(this).index()]},500);
+   })
+
+
+   
+</script>
+
+
+    </body>
+</html>
+
+<!-- 
+因为使用if 通过当前scrollTop 判断 所以点击变换左侧模块,悬浮导航栏的变化会出现异常,每一个块闪一下
+(由于在浏览时 需要根据距离动态变换导航栏样式)  解决:使用css变换,直接变换到相应位置
+
+
+优化问题:一直调用setinter 很影响性能,可以通过什么改善??  jquery 提供了scroll()函数,触发滚动事件
+每次滚动就会执行,
+-->

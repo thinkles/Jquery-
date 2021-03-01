@@ -1,0 +1,226 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<title> 导航效果</title>
+<style>
+  *{
+      padding: 0px;
+      margin: 0px;
+  }
+div{
+   width: 580px;
+   height: 280px;
+   border: 1px solid black;
+   margin: 200px auto;
+
+}
+  li{
+      list-style: none;
+      width: 170px;
+      height: 120px;
+      background-color: gray;
+      float: left;
+      margin: 10px 10px;     
+  }
+  li p{
+      background-color:#333;
+      height: 20px;
+      margin-top: 100px;
+      color:beige;
+      line-height: 20px;
+      font-size: 12px;
+    
+  }
+span{
+    display: block;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+}
+i{
+    text-indent: 20px;
+}
+</style>
+</head>
+<body>
+   <div>
+      <ul>
+          <li><p style="display: none;">
+            <span>
+                <i class="fa fa-eercast" aria-hidden="true"></i>
+                google
+            </span>
+        </p>
+    </li>
+          <li><p style="display: none;">百度一下</p></li>
+          <li><p style="display: none;">搜狐</p></li>
+          <li><p style="display: none;">搜狗</p></li>
+          <li><p style="display: none;">谷歌</p></li>
+          <li><p style="display: none;">oprea</p></li>
+      </ul>
+
+   </div>
+<script src="./jquery-3.5.1.min.js"></script>
+<script>
+
+  $(function(){
+
+    let li=$("ul li");
+    let p=$("ul li p");
+    li.mouseover(function(){
+       
+       $(this).children().stop().fadeIn("slow");
+    }).mouseout(function()
+    {
+        $(this).children().stop().fadeOut("fast");
+    })
+  })
+
+</script>
+</body>
+</html>
+ -->
+
+<!-- 导航效果 1 通过fadein 效果 和 display none 实现 
+2 通过 position 定位 和 动画实现
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<title> 导航效果  /  返回顶部</title>
+<style>
+  *{
+      padding: 0px;
+      margin: 0px;
+  }
+div.no{
+   width: 580px;
+   height: 290px;
+   border: 1px solid black;
+   margin: 200px auto;
+
+}
+  li{
+      list-style: none;
+      width: 170px;
+      height: 120px;
+      background-color: gray;
+      float: left;
+      margin: 10px 10px;     
+      position: relative;
+      overflow: hidden;
+  }
+  li p{
+      background-color:#000;
+      height: 20px;
+      position: absolute;
+      line-height: 20px;
+      font-size: 12px;
+      width: 100%;
+      color: aliceblue;
+
+  }
+span{
+ display: block;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  color:beige;
+}
+i.q{
+    text-indent: 20px;
+}
+.backup{
+  position: fixed;
+  right: 0px;
+  bottom: 10px;
+ 
+  width: 80px;
+  height: 80px;
+}
+.x li{
+  float: none;
+  text-align: center;
+  margin: 0 auto;
+  
+}
+</style>
+</head>
+<body>
+   <div class="no">
+      <ul>
+          <li><p style="bottom: -20px;" >
+            <span>
+                <i class="fa fa-eercast q" aria-hidden="true"></i>
+                google
+            </span>
+        </p>
+    </li>
+    <li><p style="bottom: -20px;">百度一下</p></li>
+          <li><p style="bottom: -20px;">搜狐</p></li>
+          <li><p style="bottom: -20px;">搜狗</p></li>
+          <li><p style="bottom: -20px;">谷歌</p></li>
+          <li><p style="bottom: -20px;">oprea</p></li>
+      </ul>
+
+   </div>
+  <ul class="x">
+    <li>我是来占据空间的</li>
+    <li>我是来占据空间的</li>
+    <li>我是来占据空间的</li>
+    <li>我是来占据空间的</li>
+    <li>我是来占据空间的</li>
+    <li>我是来占据空间的</li>
+    <li>我是来占据空间的</li>
+    <li>我是来占据空间的</li>
+  </ul>
+
+<div class="backup" style="display: none;"><i class="fa fa-steam fa-5x"></i> </div>
+<script src="./jquery-3.5.1.min.js"></script>
+<script>
+    
+  $(function(){
+
+    let li=$("ul li");
+    let p=$("ul li p");
+    li.hover(function(){
+       
+       $(this).children().stop().animate({"bottom":0},500);
+    },function(){
+        $(this).children().stop().animate({"bottom":-20},500);
+
+    })
+
+
+ 
+
+});
+
+ //返回顶部
+ let backup=$(".backup");
+$(window).scroll(function(){
+  
+  if($(window).scrollTop() >= $(window).height())
+  {
+    backup.css("display","block");
+  }
+  else{
+    backup.css("display","none");
+  }
+})
+
+backup.click(function(){
+
+  $("html").animate({"scrollTop":0},500);
+})
+  
+
+
+
+ 
+</script>
+</body>
+</html>

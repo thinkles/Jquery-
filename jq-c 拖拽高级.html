@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拖拽 </title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        div.container{
+            margin: 100px auto;
+            width: 800px;
+            height: 600px;
+            position: relative;
+            border: 1px solid forestgreen;
+        }
+        .slider{
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            top:0px;
+            left: 0px;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+     <div class="slider"></div>
+    </div>
+
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>
+       $(function () {
+        $(".slider").mousedown(function(){
+
+            $(document).mousemove(function(e){
+           let nleft= e.pageX-$(".container").offset().left - $(".slider").width()/2;
+           let ntop = e.pageY-$(".container").offset().top - $(".slider").height()/2;
+          //移动偏移量计算
+           if(nleft<0){
+               nleft = 0;
+           }
+           else if(nleft  > $(".container").width() - $(".slider").width())
+           {
+                 nleft = $(".container").width() - $(".slider").width();
+           }
+
+           if(ntop<0){
+             ntop = 0;
+           }
+           else if(ntop > $(".container").height() - $(".slider").height())
+           {
+                 ntop = $(".container").height() -$(".slider").height()
+           }
+ //边界判断
+          $(".slider").css({"left":nleft,"top":ntop });
+         }).mouseup(function(){
+            
+            $(this).off('mousemove');
+        }) 
+
+
+        })
+        
+        })
+            
+    </script>
+</body>
+</html>
+
+<!-- 
+    拖拽事件中,需要为滑块绑定 鼠标按下事件来触发鼠标移动事件
+    鼠标移动事件并非绑定在滑块上,而是document上,这样在超过容器或者过快的滑动滑块时也同样能够做出反应
+    再松开鼠标时,解除绑定事件
+ -->

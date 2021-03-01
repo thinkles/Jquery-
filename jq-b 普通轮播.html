@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>jq普通轮播---2</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .lunbo {
+            height: 500px;
+            width: 700px;
+            position: relative;
+            margin: auto;
+        }
+
+        .viewr {
+            height: 500px;
+            width: 700px;
+            overflow: hidden;
+            position: absolute;
+
+        }
+
+        .container {
+            width: 10000px;
+            position: absolute;
+
+        }
+
+        .contain {
+            list-style: none;
+           
+            float: left;
+            position: absolute;
+            transition: left .3s;
+        }
+
+        .contain>li {
+            float: left;
+            
+            
+        }
+
+        .find {
+            position: absolute;
+            top: 200px;
+            left: 660px;
+        }
+
+        .find0 {
+            position: absolute;
+            top: 200px;
+            left: 0px;
+        }
+
+        a {
+            text-decoration: none;
+            color: beige;
+        }
+
+        .dot {
+            position: absolute;
+            top: 470px;
+            left: 300px;
+        }
+
+        .dot>span {
+            display: block;
+            float: left;
+            margin-left: 8px;
+            width: 13px;
+            height: 13px;
+            background-image: url(../img/wendaoicon.png);
+            background-position: 0 -429px;
+            cursor: pointer;
+            text-indent: -999px;
+            overflow: hidden;
+        }
+
+        span.on {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lunbo">
+        <div class="viewr">
+            <div class="container">
+                <ul class="contain" style="left: 0px;">
+                    <li ><a href="#"><img src="./img/lunbo1.jpg" width="700px" height="500px"></a></li>
+                    <li ><a href="#"><img src="./img/lunbo2.jpg " width="700px" height="500px"></a>
+                    </li>
+                    <li><a href="#"><img src="./img/lunbo3.jpg" width="700px" height="500px"></a>
+                    </li>
+                </ul>
+                <div class="find" style="font-size: 50px;"><a class="cl" href="#">></a></div>
+                <div class="find0" style="font-size: 50px;"><a class="cl" href="#">
+                        <</a> </div> <div class="dot">
+                            <span class="on">1</span>
+                            <span>2</span>
+                            <span>3</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="./jquery-3.5.1.min.js"> </script>
+    <script>
+        $(document).ready(function(){
+            var floop=0;
+            var y=$(".contain");
+            var bot=$(".dot>span");
+            $(".cl").click(function(){  //处理右导航
+                floop++;
+                if(floop==3)
+                {
+                    floop=0;
+                }
+               var distance=floop*(-700);
+               y.css("left",distance);
+               bot.removeClass("on");
+               bot.eq(floop).addClass("on");
+            })
+            //处理底部导航
+          bot.click(function(){
+            var nup=$(this).index()*(-700);
+            y.css("left",nup);
+            bot.removeClass("on");
+            $(this).addClass("on");
+
+          })
+
+
+        })
+    </script>
+</body>
+</html>
+
+<!-- 以移动容器为整体进行变换,使用变量记录当前索引 ,方便快捷 -->
+
+
+
+ <!-- 在使用transition时,需要注意要有预设值,这里我们给了left 0px ,如果不给这个值,第一次变化就不执行渐变效果,第二次开始才执行 -->
+<!-- 拓展: 
+    普通轮播实现 前后切换,而不是最后一张跳跃到前一张
+    1.渐变轮播  jq-b+
+    2.大小轮播  jq-test(图片整体 很混乱)
+    3.卡片式轮播  trasnsition    (使用柔性盒子) translateX  失败  jq-b++
+    4.大小轮播  大小轮播能不能还使用整体移动??
+
+-->
